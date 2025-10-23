@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import RatingCircles from './ratingCircle';
 import * as d3 from 'd3';
 import StarRating from './starRating';
+import Notes from './notes';
 
 const TastingChart = () => {
 const svgRef = useRef(null);
@@ -11,8 +12,7 @@ const [data, setData] = useState({
 	finish: {}
 });
 
-// const [starRating, setStarRating] = useState(0);
-const [notes, setNotes] = useState('');
+// const [notes, setNotes] = useState('');
 
 const attributes = [
 	'DRY TANG', 'FRUIT', 'MELLOW', 'SPICE', 'SMOKE', 'WOOD', 'EARTH',
@@ -193,7 +193,7 @@ useEffect(() => {
 		
 		<div className="flex gap-8 text-sm text-gray-600 mb-3">
 			<div className="flex items-center gap-2">
-			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[10px] border-b-gray-500" />
+			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
 			<span>Aroma</span>
 			</div>
 			<div className="flex items-center gap-2">
@@ -212,16 +212,11 @@ useEffect(() => {
 
 		<div className="pt-5 border-t border-gray-200">
 			<div className="flex justify-between items-center mb-4">
-			<h2 className="text-2xl tracking-widest text-gray-800 font-light">NOTES</h2>
-			<StarRating/>
+				<h2 className="text-2xl tracking-widest text-gray-800 font-light">NOTES</h2>
+				<StarRating/>
 			</div>
-			<textarea
-			value={notes}
-			onChange={(e) => setNotes(e.target.value)}
-			placeholder="Add your tasting notes here..."
-			className="w-full min-h-20 p-3 border border-gray-300 rounded font-mono text-sm resize-y"
-			/>
 		</div>
+		<Notes/>
 		</div>
 	);
 	};
