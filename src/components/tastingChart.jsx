@@ -1,147 +1,142 @@
-	import React, { useState, useEffect, useRef } from 'react';
-	import * as d3 from 'd3';
+import React, { useState, useEffect, useRef } from 'react';
+import RatingCircles from './ratingCircle';
+import * as d3 from 'd3';
 
-	const TastingChart = () => {
-	const svgRef = useRef(null);
-	const [data, setData] = useState({
-		aroma: {},
-		taste: {},
-		finish: {}
+const TastingChart = () => {
+const svgRef = useRef(null);
+const [data, setData] = useState({
+	aroma: {},
+	taste: {},
+	finish: {}
+});
+
+const [starRating, setStarRating] = useState(0);
+const [notes, setNotes] = useState('');
+
+const attributes = [
+	'DRY TANG', 'FRUIT', 'MELLOW', 'SPICE', 'SMOKE', 'WOOD', 'EARTH',
+	'CHEMICAL', 'BITTER', 'UMAMI', 'TART', 'CLEAN', 'STALE', 'NUT'
+];
+
+const width = 400;
+const height = 400;
+const centerX = width / 2;
+const centerY = height / 2;
+const radius = 140;
+const angleStep = (2 * Math.PI) / attributes.length;
+
+useEffect(() => {
+	if (!svgRef.current) return;
+
+	const svg = d3.select(svgRef.current);
+	svg.selectAll('*').remove();
+
+	// Draw concentric circles
+	const circles = [0.2, 0.4, 0.6, 0.8, 1.0];
+	circles.forEach(scale => {
+	svg.append('circle')
+		.attr('cx', centerX)
+		.attr('cy', centerY)
+		.attr('r', radius * scale)
+		.attr('fill', 'none')
+		.attr('stroke', '#e0e0e0')
+		.attr('stroke-width', 1);
 	});
-	const [ratings, setRatings] = useState({
-		body: 0,
-		mouthFeel: 0,
-		balance: 0,
-		sweetness: 0,
-		linger: 0
-	});
-	const [starRating, setStarRating] = useState(0);
-	const [notes, setNotes] = useState('');
 
-	const attributes = [
-		'DRY TANG', 'FRUIT', 'MELLOW', 'SPICE', 'SMOKE', 'WOOD', 'EARTH',
-		'CHEMICAL', 'BITTER', 'UMAMI', 'TART', 'CLEAN', 'STALE', 'NUT'
-	];
-
-	const width = 400;
-	const height = 400;
-	const centerX = width / 2;
-	const centerY = height / 2;
-	const radius = 140;
-	const angleStep = (2 * Math.PI) / attributes.length;
-
-	useEffect(() => {
-		if (!svgRef.current) return;
-
-		const svg = d3.select(svgRef.current);
-		svg.selectAll('*').remove();
-
-		// Draw concentric circles
-		const circles = [0.2, 0.4, 0.6, 0.8, 1.0];
-		circles.forEach(scale => {
-		svg.append('circle')
-			.attr('cx', centerX)
-			.attr('cy', centerY)
-			.attr('r', radius * scale)
-			.attr('fill', 'none')
-			.attr('stroke', '#e0e0e0')
-			.attr('stroke-width', 1);
-		});
-
-		// Create text labels
-		attributes.forEach((attr, i) => {
-		const angle = i * angleStep - Math.PI / 2;
-		const x = centerX + Math.cos(angle) * (radius + 40);
-		const y = centerY + Math.sin(angle) * (radius + 40);
-		
-		const words = attr.split(' ');
-		const textPath = svg.append('text')
+	// Create text labels
+	attributes.forEach((attr, i) => {
+	const angle = i * angleStep - Math.PI / 2;
+	const x = centerX + Math.cos(angle) * (radius + 40);
+	const y = centerY + Math.sin(angle) * (radius + 40);
+	
+	const words = attr.split(' ');
+	const textPath = svg.append('text')
+		.attr('x', x)
+		.attr('y', y)
+		.attr('text-anchor', 'middle')
+		.attr('dominant-baseline', 'middle')
+		.attr('font-size', '11px')
+		.attr('fill', '#666')
+		.attr('font-family', 'Courier New, monospace')
+		.attr('letter-spacing', '1px');
+	
+	if (words.length > 1) {
+		words.forEach((word, wi) => {
+		textPath.append('tspan')
 			.attr('x', x)
-			.attr('y', y)
-			.attr('text-anchor', 'middle')
-			.attr('dominant-baseline', 'middle')
-			.attr('font-size', '11px')
+			.attr('dy', wi === 0 ? 0 : '1.1em')
+			.text(word);
+		});
+	} else {
+		textPath.text(attr);
+	}
+	});
+
+	// Draw data lines
+	['aroma', 'taste', 'finish'].forEach(type => {
+	const points = [];
+	attributes.forEach((attr, i) => {
+		const value = data[type][attr] || 0;
+		if (value > 0) {
+		const angle = i * angleStep - Math.PI / 2;
+		const r = (value / 5) * radius;
+		const x = centerX + Math.cos(angle) * r;
+		const y = centerY + Math.sin(angle) * r;
+		points.push([x, y]);
+		}
+	});
+
+	if (points.length > 1) {
+		const lineColor = type === 'aroma' ? '#a7a7a7' : type === 'taste' ? '#555' : '#111';
+		// Close the path by adding the first point at the end
+		const closedPoints = [...points, points[0]];
+		svg.append('path')
+		.attr('class', 'data-line')
+		.attr('d', d3.line()(closedPoints))
+		.attr('fill', 'none')
+		.attr('stroke', lineColor)
+		.attr('stroke-width', 2)
+		.attr('opacity', 0.5);
+	}
+	});
+
+	// Draw data points
+	['aroma', 'taste', 'finish'].forEach(type => {
+	attributes.forEach((attr, i) => {
+		const value = data[type][attr] || 0;
+		if (value > 0) {
+		const angle = i * angleStep - Math.PI / 2;
+		const r = (value / 5) * radius;
+		const x = centerX + Math.cos(angle) * r;
+		const y = centerY + Math.sin(angle) * r;
+
+		if (type === 'aroma') {
+			svg.append('polygon')
+			.attr('points', `${x},${y-6} ${x-5},${y+4} ${x+5},${y+4}`)
+			.attr('fill', '#999')
+			.style('cursor', 'pointer')
+			.on('click', () => handlePointRemove(type, attr));
+		} else if (type === 'taste') {
+			svg.append('circle')
+			.attr('cx', x)
+			.attr('cy', y)
+			.attr('r', 5)
 			.attr('fill', '#666')
-			.attr('font-family', 'Courier New, monospace')
-			.attr('letter-spacing', '1px');
-		
-		if (words.length > 1) {
-			words.forEach((word, wi) => {
-			textPath.append('tspan')
-				.attr('x', x)
-				.attr('dy', wi === 0 ? 0 : '1.1em')
-				.text(word);
-			});
+			.style('cursor', 'pointer')
+			.on('click', () => handlePointRemove(type, attr));
 		} else {
-			textPath.text(attr);
+			svg.append('rect')
+			.attr('x', x - 5)
+			.attr('y', y - 5)
+			.attr('width', 10)
+			.attr('height', 10)
+			.attr('fill', '#333')
+			.style('cursor', 'pointer')
+			.on('click', () => handlePointRemove(type, attr));
 		}
-		});
-
-		// Draw data lines
-		['aroma', 'taste', 'finish'].forEach(type => {
-		const points = [];
-		attributes.forEach((attr, i) => {
-			const value = data[type][attr] || 0;
-			if (value > 0) {
-			const angle = i * angleStep - Math.PI / 2;
-			const r = (value / 5) * radius;
-			const x = centerX + Math.cos(angle) * r;
-			const y = centerY + Math.sin(angle) * r;
-			points.push([x, y]);
-			}
-		});
-
-		if (points.length > 1) {
-			const lineColor = type === 'aroma' ? '#a7a7a7' : type === 'taste' ? '#555' : '#111';
-			// Close the path by adding the first point at the end
-			const closedPoints = [...points, points[0]];
-			svg.append('path')
-			.attr('class', 'data-line')
-			.attr('d', d3.line()(closedPoints))
-			.attr('fill', 'none')
-			.attr('stroke', lineColor)
-			.attr('stroke-width', 2)
-			.attr('opacity', 0.5);
 		}
-		});
-
-		// Draw data points
-		['aroma', 'taste', 'finish'].forEach(type => {
-		attributes.forEach((attr, i) => {
-			const value = data[type][attr] || 0;
-			if (value > 0) {
-			const angle = i * angleStep - Math.PI / 2;
-			const r = (value / 5) * radius;
-			const x = centerX + Math.cos(angle) * r;
-			const y = centerY + Math.sin(angle) * r;
-
-			if (type === 'aroma') {
-				svg.append('polygon')
-				.attr('points', `${x},${y-6} ${x-5},${y+4} ${x+5},${y+4}`)
-				.attr('fill', '#999')
-				.style('cursor', 'pointer')
-				.on('click', () => handlePointRemove(type, attr));
-			} else if (type === 'taste') {
-				svg.append('circle')
-				.attr('cx', x)
-				.attr('cy', y)
-				.attr('r', 5)
-				.attr('fill', '#666')
-				.style('cursor', 'pointer')
-				.on('click', () => handlePointRemove(type, attr));
-			} else {
-				svg.append('rect')
-				.attr('x', x - 5)
-				.attr('y', y - 5)
-				.attr('width', 10)
-				.attr('height', 10)
-				.attr('fill', '#333')
-				.style('cursor', 'pointer')
-				.on('click', () => handlePointRemove(type, attr));
-			}
-			}
-		});
-		});
+	});
+	});
 
 		// Click handler for adding points
 		svg.on('click', function(event) {
@@ -178,29 +173,6 @@
 		return newData;
 		});
 	};
-
-	const handleRatingClick = (attribute, value) => {
-		setRatings(prev => ({ ...prev, [attribute]: value }));
-	};
-
-	const RatingCircles = ({ attribute, label }) => (
-		<div className="mb-5">
-		<div className="text-sm mb-2 text-gray-600">{label}</div>
-		<div className="flex gap-2">
-			{[1, 2, 3, 4, 5].map(value => (
-			<div
-				key={value}
-				onClick={() => handleRatingClick(attribute, value)}
-				className={`w-6 h-6 rounded-full border-2 cursor-pointer transition-all ${
-				ratings[attribute] >= value
-					? 'bg-gray-800 border-gray-800'
-					: 'border-gray-300 hover:border-gray-500'
-				}`}
-			/>
-			))}
-		</div>
-		</div>
-	);
 
 	return (
 		<div className="bg-white p-11 rounded-lg shadow-lg max-w-4xl mx-auto">
