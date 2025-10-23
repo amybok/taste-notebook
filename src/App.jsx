@@ -9,7 +9,7 @@ function App() {
 	const [count, setCount] = useState(0)
 
 	return (
-		<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", scale:"130%", marginTop:"7em"}}>
+		<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", maxHeight:"100vh", scale:"95%"}}>
 			<PhotoCard/>
 			<TastingChart/>
 		</div>

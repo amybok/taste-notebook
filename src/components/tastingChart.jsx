@@ -180,7 +180,7 @@ useEffect(() => {
 		<h2 className="text-2xl tracking-widest mb-8 text-gray-800 font-light">COMPOSITION</h2>
 		
 		<div className="flex gap-16 items-center mb-8">
-			<svg ref={svgRef} width={width} height={height} className="shrink-0" />
+			<svg ref={svgRef} width={width} height={height} className="shrink-0 scale-110" />
 			
 			<div>
 			<RatingCircles attribute="body" label="Body" />
@@ -192,7 +192,7 @@ useEffect(() => {
 		</div>
 		
 		{/* Legends */}
-		<div className="flex gap-8 text-sm text-gray-600 mb-3">
+		<div className="flex gap-8 text-base text-gray-600 mb-3">
 			<div className="flex items-center gap-2">
 			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
 			<span>Aroma</span>
@@ -207,13 +207,13 @@ useEffect(() => {
 			</div>
 		</div>
 
-		<div className="text-sm text-gray-400 mb-8 text-left">
+		<div className="text-sm text-gray-400 mb-6 text-left">
 			Command/Alt + Click for Finish, Shift + Click for Aroma
 		</div>
 
 		<div className="pt-5 border-t border-gray-200">
-			<div className="flex justify-between items-center mb-4">
-				<h2 className="text-2xl tracking-widest text-gray-800 font-light">NOTES</h2>
+			<div className="flex justify-between items-center mb-3">
+				<h2 className="text-xl tracking-widest text-gray-800 font-light">NOTES</h2>
 				<StarRating/>
 			</div>
 		</div>
