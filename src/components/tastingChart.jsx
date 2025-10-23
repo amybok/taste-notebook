@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import RatingCircles from './ratingCircle';
 import * as d3 from 'd3';
+import StarRating from './starRating';
 
 const TastingChart = () => {
 const svgRef = useRef(null);
@@ -10,12 +11,12 @@ const [data, setData] = useState({
 	finish: {}
 });
 
-const [starRating, setStarRating] = useState(0);
+// const [starRating, setStarRating] = useState(0);
 const [notes, setNotes] = useState('');
 
 const attributes = [
 	'DRY TANG', 'FRUIT', 'MELLOW', 'SPICE', 'SMOKE', 'WOOD', 'EARTH',
-	'CHEMICAL', 'BITTER', 'UMAMI', 'TART', 'CLEAN', 'STALE', 'NUT'
+	'FLORAL', 'BITTER', 'UMAMI', 'TART', 'CLEAN', 'GRASS', 'NUT'
 ];
 
 const width = 400;
@@ -212,27 +213,13 @@ useEffect(() => {
 		<div className="pt-5 border-t border-gray-200">
 			<div className="flex justify-between items-center mb-4">
 			<h2 className="text-2xl tracking-widest text-gray-800 font-light">NOTES</h2>
-			<div className="flex gap-1">
-				{[1, 2, 3, 4, 5].map(rating => (
-				<svg
-					key={rating}
-					onClick={() => setStarRating(rating)}
-					className="w-8 h-8 cursor-pointer"
-					viewBox="0 0 24 24"
-					fill={starRating >= rating ? '#ffd700' : 'none'}
-					stroke={starRating >= rating ? '#ffd700' : '#ccc'}
-					strokeWidth="2"
-				>
-					<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-				</svg>
-				))}
-			</div>
+			<StarRating/>
 			</div>
 			<textarea
 			value={notes}
 			onChange={(e) => setNotes(e.target.value)}
 			placeholder="Add your tasting notes here..."
-			className="w-full min-h-[80px] p-3 border border-gray-300 rounded font-mono text-sm resize-y"
+			className="w-full min-h-20 p-3 border border-gray-300 rounded font-mono text-sm resize-y"
 			/>
 		</div>
 		</div>
