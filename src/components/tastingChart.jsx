@@ -191,6 +191,7 @@ useEffect(() => {
 			</div>
 		</div>
 		
+		{/* Legends */}
 		<div className="flex gap-8 text-sm text-gray-600 mb-3">
 			<div className="flex items-center gap-2">
 			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />

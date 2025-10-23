@@ -1,8 +1,20 @@
 import vibe from "../assets/vibe.png"
-import.meta.env.GEMINI_API_KEY
+import.meta.env.VITE_APP_GEMINI_API_KEY
+import { GoogleGenAI } from "@google/genai";
 
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_APP_GEMINI_API_KEY });
+
+async function gemini() {
+    const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: "Explain how AI works in a few words",
+    });
+    console.log(response.text);
+}
 
 const PhotoCard = () => {
+    gemini()
+
     return (
         <div className="bg-white p-10 rounded-lg shadow-lg max-w-4xl mx-auto">
             <div className="w-70 h-90 overflow-clip">
