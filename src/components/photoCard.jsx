@@ -48,21 +48,27 @@ const PhotoCard = () => {
             </div>
             
             <div className="justify-between flex">
-                <h2 className="text-[1.35rem] tracking-widest mb-8 text-gray-800 font-light mt-8">NAME</h2>
-                <textarea className="text-[1.35rem] tracking-widest mb-8 text-gray-800 font-light mt-8 text-right max-w-45"
+                <h2 className="text-[1.35rem] tracking-widest mb-5 text-gray-800 font-light mt-8">NAME</h2>
+                <textarea className="text-[1.35rem] tracking-widest mb-5 text-gray-800 font-light mt-8 text-right max-w-45"
                         placeholder="Add name..."/>
                 {/* <h2 className="text-2xl tracking-widest mb-8 text-gray-800 font-light mt-8 text-right max-w-45">{"Chigi no shiro"}</h2> */}
             </div>
             <div className="justify-between flex">
-                <h3 className="text-[1.1rem] tracking-widest mb-8 text-gray-800 font-light text-left">REGION</h3>
-                <textarea className="text-[1.2rem] tracking-widest mb-8 text-gray-800 font-light text-right max-w-45"
+                <h3 className="text-[1rem] tracking-widest mb-4 text-gray-800 font-light text-left">REGION</h3>
+                <textarea className="text-[1rem] tracking-widest mb-4 text-gray-800 font-light text-right max-w-45"
                         placeholder="Add region..."/>
                 {/* <h3 className="text-xl tracking-widest mb-8 text-gray-800 font-light text-right max-w-45">{"Uji"}</h3> */}
             </div>
             <div className="justify-between flex">
-                <h3 className="text-[1.1rem] tracking-widest mb-8 text-gray-800 font-light text-left">BRAND</h3>
-                <textarea className="text-[1.2rem] tracking-widest mb-8 text-gray-800 font-light text-right max-w-45"
+                <h3 className="text-[1rem] tracking-widest mb-4 text-gray-800 font-light text-left">BRAND</h3>
+                <textarea className="text-[1rem] tracking-widest mb-4 text-gray-800 font-light text-right max-w-45"
                         placeholder="Add brand..."/>
+                {/* <h3 className="text-xl tracking-widest mb-8 text-gray-800 font-light text-right max-w-45">{"Marukyu Koyamaen"}</h3> */}
+            </div>
+            <div className="justify-between flex">
+                <h3 className="text-[1rem] tracking-widest mb-4 text-gray-800 font-light text-left">PREPARATION</h3>
+                <textarea className="text-[1rem] tracking-widest mb-4 text-gray-800 font-light text-right max-w-45"
+                        placeholder="Add method..."/>
                 {/* <h3 className="text-xl tracking-widest mb-8 text-gray-800 font-light text-right max-w-45">{"Marukyu Koyamaen"}</h3> */}
             </div>
         </div>
