@@ -10,7 +10,7 @@ function App() {
 	const [count, setCount] = useState(0)
 
 	return (
-		<div>
+		<div className='page' style={{overflow:"auto", flexDirection:"column"}}>
 			<div className='font-mono tracking-widest' style={{backgroundColor:"rgb(33,53,54)", height:"100vh", position:"absolute", left:"0", width:"12em", boxShadow:"7px 0px 7px rgba(0, 0, 0, 0.2)", color:"beige", paddingBottom:"5rem"}}>
 				<div style={{margin:"2.25rem 1.25rem"}}>
 					<h2 className='text-2xl mb-8 font-medium border-b-amber-400 border-b pb-2'>TASTE NOTEBOOK</h2>
