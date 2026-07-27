@@ -19,11 +19,18 @@ const attributes = [
 	'FLORAL', 'BITTER', 'UMAMI', 'TART', 'CLEAN', 'GRASS', 'NUT'
 ];
 
-const width = 400;
-const height = 400;
-const centerX = width / 2;
+console.log(window.innerWidth);
+
+let width = 400;
+
+if (window.innerWidth < 1206){
+	width = 0.8* window.innerWidth
+}
+
+const height = width;
+const centerX = width / 2 - 5;
 const centerY = height / 2;
-const radius = 140;
+const radius = 0.35 * width;
 const angleStep = (2 * Math.PI) / attributes.length;
 
 useEffect(() => {
@@ -47,8 +54,8 @@ useEffect(() => {
 	// Create text labels
 	attributes.forEach((attr, i) => {
 	const angle = i * angleStep - Math.PI / 2;
-	const x = centerX + Math.cos(angle) * (radius + 40);
-	const y = centerY + Math.sin(angle) * (radius + 40);
+	const x = centerX + Math.cos(angle) * (radius + 25);
+	const y = centerY + Math.sin(angle) * (radius + 25);
 	
 	const words = attr.split(' ');
 	const textPath = svg.append('text')
@@ -176,11 +183,11 @@ useEffect(() => {
 	};
 
 	return (
-		<div className="bg-white p-11 rounded-lg shadow-lg max-w-4xl mx-auto">
+		<div className="bg-white p-11 rounded-lg shadow-lg max-w-4xl mx-auto flex-wrap">
 		<h2 className="text-2xl tracking-widest mb-8 text-gray-800 font-light">COMPOSITION</h2>
 		
-		<div className="flex gap-16 items-center mb-8">
-			<svg ref={svgRef} width={width} height={height} className="shrink-0 scale-110" />
+		<div className="flex gap-16 items-center mb-8 flex-wrap">
+			<svg ref={svgRef} width={width} height={height} className="block mx-auto overflow-visible" />
 			
 			<div>
 			<RatingCircles attribute="body" label="Body" />
@@ -212,7 +219,7 @@ useEffect(() => {
 		</div>
 
 		<div className="pt-5 border-t border-gray-200">
-			<div className="flex justify-between items-center mb-3">
+			<div className="flex justify-between items-center mb-3 flex-wrap">
 				<h2 className="text-xl tracking-widest text-gray-800 font-light">NOTES</h2>
 				<StarRating/>
 			</div>
