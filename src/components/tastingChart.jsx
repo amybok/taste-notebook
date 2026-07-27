@@ -112,6 +112,9 @@ useEffect(() => {
 	['aroma', 'taste', 'finish'].forEach(type => {
 	attributes.forEach((attr, i) => {
 		const value = data[type][attr] || 0;
+
+		console.log(type, attr, value);
+
 		if (value > 0) {
 		const angle = i * angleStep - Math.PI / 2;
 		const r = (value / 5) * radius;
@@ -124,6 +127,7 @@ useEffect(() => {
 			.attr('fill', '#999')
 			.style('cursor', 'pointer')
 			.on('click', () => handlePointRemove(type, attr));
+			console.log(type, attr);
 		} else if (type === 'taste') {
 			svg.append('circle')
 			.attr('cx', x)
@@ -175,17 +179,37 @@ useEffect(() => {
 	}, [data]);
 
 	const handlePointRemove = (type, attr) => {
-		setData(prevData => {
-		const newData = { ...prevData };
-		delete newData[type][attr];
-		return newData;
-		});
+		setData(prevData => ({
+		...prevData,
+        [type]: { ...prevData[type],[attr]: 0 }
+		}));
+		// delete newData[type][attr];
+		// return newData;
 	};
 
 	return (
 		<div className="bg-white p-11 rounded-lg shadow-lg max-w-4xl mx-auto flex-wrap">
 		<h2 className="text-2xl tracking-widest mb-8 text-gray-800 font-light">COMPOSITION</h2>
 		
+		{/* Legends */}
+		<div className="flex gap-2 text-base text-gray-600 mb-3">
+			<button className="flex items-center gap-2">
+			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
+			<span>Aroma</span>
+			</button>
+			<button className="flex items-center gap-2">
+			<div className="w-2.5 h-2.5 bg-gray-600 rounded-full" />
+			<span>Taste</span>
+			</button>
+			<button className="flex items-center gap-2">
+			<div className="w-2.5 h-2.5 bg-gray-800" />
+			<span>Finish</span>
+			</button>
+		</div>
+		<div className="text-sm text-gray-400 mb-6 text-left">
+			Command/Alt + Click for Finish, Shift + Click for Aroma
+		</div>
+
 		<div className="flex gap-16 items-center mb-8 flex-wrap">
 			<svg ref={svgRef} width={width} height={height} className="block mx-auto overflow-visible" />
 			
@@ -198,8 +222,9 @@ useEffect(() => {
 			</div>
 		</div>
 		
+		{console.log(data)}
 		{/* Legends */}
-		<div className="flex gap-8 text-base text-gray-600 mb-3">
+		{/* <div className="flex gap-8 text-base text-gray-600 mb-3">
 			<div className="flex items-center gap-2">
 			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
 			<span>Aroma</span>
@@ -216,7 +241,7 @@ useEffect(() => {
 
 		<div className="text-sm text-gray-400 mb-6 text-left">
 			Command/Alt + Click for Finish, Shift + Click for Aroma
-		</div>
+		</div> */}
 
 		<div className="pt-5 border-t border-gray-200">
 			<div className="flex justify-between items-center mb-3 flex-wrap">
