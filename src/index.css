@@ -48,6 +48,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+button:active{
+  background-color: #2c2c2e;
+  color: #ffffff;
+}
+
 button:hover {
   background-color: #2c2c2e;
   color: #ffffff;

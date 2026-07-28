@@ -12,7 +12,7 @@ const [data, setData] = useState({
 	finish: {}
 });
 
-// const [notes, setNotes] = useState('');
+const [buttonType, setButtonType] = useState('');
 
 const attributes = [
 	'DRY TANG', 'FRUIT', 'MELLOW', 'SPICE', 'SMOKE', 'WOOD', 'EARTH',
@@ -32,6 +32,14 @@ const centerX = width / 2 - 5;
 const centerY = height / 2;
 const radius = 0.35 * width;
 const angleStep = (2 * Math.PI) / attributes.length;
+
+
+function handleClick (event){
+    // Read the ID of the button that owns the event handler
+    const buttonId = event.currentTarget.id;
+    console.log(`Clicked button ID: ${buttonId}`);
+	setButtonType(buttonId);
+};
 
 useEffect(() => {
 	if (!svgRef.current) return;
@@ -176,8 +184,8 @@ useEffect(() => {
 		const attr = attributes[index];
 		
 		let type = 'taste';
-		if (event.shiftKey) type = 'aroma';
-		if (event.ctrlKey || event.metaKey) type = 'finish';
+		if (event.shiftKey || buttonType == "aroma") type = 'aroma';
+		if (event.ctrlKey || event.metaKey || buttonType == "finish") type = 'finish';
 		
 		const value = Math.min(5, Math.max(1, Math.round((dist / radius) * 5)));
 		
@@ -201,21 +209,21 @@ useEffect(() => {
 		
 		{/* Legends */}
 		<div className="flex gap-2 text-base text-gray-600 mb-3">
-			<button className="flex items-center gap-2" id='aroma'>
+			<button className="flex items-center gap-2" id='aroma' onClick={handleClick}>
 			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
 			<span>Aroma</span>
 			</button>
-			<button className="flex items-center gap-2" id='taste'>
+			<button className="flex items-center gap-2" id='taste'onClick={handleClick}>
 			<div className="w-2.5 h-2.5 bg-gray-600 rounded-full" />
 			<span>Taste</span>
 			</button>
-			<button className="flex items-center gap-2" id='finish'> 
+			<button className="flex items-center gap-2" id='finish'onClick={handleClick} > 
 			<div className="w-2.5 h-2.5 bg-gray-800" />
 			<span>Finish</span>
 			</button>
 		</div>
 		<div className="text-sm text-gray-400 mb-6 text-left">
-			Command/Alt + Click for Finish, Shift + Click for Aroma
+			Command/Control + Click for Finish, Shift + Click for Aroma
 		</div>
 
 		<div className="flex gap-16 items-center mb-8 flex-wrap">
