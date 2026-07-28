@@ -201,15 +201,15 @@ useEffect(() => {
 		
 		{/* Legends */}
 		<div className="flex gap-2 text-base text-gray-600 mb-3">
-			<button className="flex items-center gap-2">
+			<button className="flex items-center gap-2" id='aroma'>
 			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
 			<span>Aroma</span>
 			</button>
-			<button className="flex items-center gap-2">
+			<button className="flex items-center gap-2" id='taste'>
 			<div className="w-2.5 h-2.5 bg-gray-600 rounded-full" />
 			<span>Taste</span>
 			</button>
-			<button className="flex items-center gap-2">
+			<button className="flex items-center gap-2" id='finish'> 
 			<div className="w-2.5 h-2.5 bg-gray-800" />
 			<span>Finish</span>
 			</button>

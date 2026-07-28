@@ -29,11 +29,7 @@ function App() {
 			{/* </div> */}
 			{/*<div style={{display:"flex", justifyContent:"space-between", maxHeight:"100vh", marginLeft:"8em", marginRight:"-3.5em", flexWrap: "wrap"}}>*/}
 			<div
-  className="
-    lg:flex
-    lg:flex-wrap
-    lg:ml-32
-  "
+  className="lg:flex lg:flex-wrap"
 >
 				<PhotoCard/>
 				<TastingChart/>
