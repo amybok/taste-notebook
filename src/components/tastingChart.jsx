@@ -113,8 +113,6 @@ useEffect(() => {
 	attributes.forEach((attr, i) => {
 		const value = data[type][attr] || 0;
 
-		console.log(type, attr, value);
-
 		if (value > 0) {
 		const angle = i * angleStep - Math.PI / 2;
 		const r = (value / 5) * radius;
@@ -126,8 +124,12 @@ useEffect(() => {
 			.attr('points', `${x},${y-6} ${x-5},${y+4} ${x+5},${y+4}`)
 			.attr('fill', '#999')
 			.style('cursor', 'pointer')
-			.on('click', () => handlePointRemove(type, attr));
-			console.log(type, attr);
+			.on('click', () => {
+				event.stopPropagation();
+				handlePointRemove(type, attr)
+			});
+			
+
 		} else if (type === 'taste') {
 			svg.append('circle')
 			.attr('cx', x)
@@ -135,7 +137,12 @@ useEffect(() => {
 			.attr('r', 5)
 			.attr('fill', '#666')
 			.style('cursor', 'pointer')
-			.on('click', () => handlePointRemove(type, attr));
+			.on('click', (event) => {
+				// console.log("Polygon clicked", type, attr);
+    			event.stopPropagation();
+				handlePointRemove(type, attr)
+			});
+
 		} else {
 			svg.append('rect')
 			.attr('x', x - 5)
@@ -144,7 +151,10 @@ useEffect(() => {
 			.attr('height', 10)
 			.attr('fill', '#333')
 			.style('cursor', 'pointer')
-			.on('click', () => handlePointRemove(type, attr));
+			.on('click', () => {
+				event.stopPropagation();
+				handlePointRemove(type, attr)
+			});
 		}
 		}
 	});
@@ -183,8 +193,6 @@ useEffect(() => {
 		...prevData,
         [type]: { ...prevData[type],[attr]: 0 }
 		}));
-		// delete newData[type][attr];
-		// return newData;
 	};
 
 	return (
