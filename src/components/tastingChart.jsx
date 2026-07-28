@@ -194,7 +194,7 @@ useEffect(() => {
 			[type]: { ...prevData[type], [attr]: value }
 		}));
 		});
-	}, [data]);
+	}, [data, buttonType]);
 
 	const handlePointRemove = (type, attr) => {
 		setData(prevData => ({
