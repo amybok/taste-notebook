@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { supabase } from "../lib/supabase.js";
 
 const { data, error } = await supabase
   .from("information_schema.tables")
