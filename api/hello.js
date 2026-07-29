@@ -12,7 +12,7 @@ import { supabase } from "../lib/supabase.js";
 // }
 
 async function test(){
-  const { data, error } = await supabase.from("aroma").select("*");
+  const { data, error } = await supabase.from("records").select("*");
 
   if (error) {
   // Logs the full error: message, code, details, and hint.
