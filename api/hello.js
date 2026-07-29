@@ -15,10 +15,12 @@ async function test(){
   const { data, error } = await supabase.from("records").select("*");
 
   if (error) {
-  // Logs the full error: message, code, details, and hint.
-  console.error(error)} 
+    // Logs the full error: message, code, details, and hint.
+    console.log("error");
+    console.error(error)} 
   else {
-  console.log(data)};
+    console.log("success");
+    console.log(data)};
 }
 
 export async function GET(request) {
