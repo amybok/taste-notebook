@@ -21,10 +21,13 @@ const attributes = [
 
 console.log(window.innerWidth);
 
+let style = {justifyContent: "start"};
+
 let width = 400;
 
 if (window.innerWidth < 1206){
-	width = 0.8* window.innerWidth
+	width = 0.8* window.innerWidth;
+	style = {justifyContent: "center"};
 }
 
 const height = width;
@@ -208,7 +211,7 @@ useEffect(() => {
 		<h2 className="text-2xl tracking-widest mb-8 text-gray-800 font-light">COMPOSITION</h2>
 		
 		{/* Legends */}
-		<div className="flex gap-2 text-base text-gray-600 mb-3">
+		<div className="flex gap-2 text-base text-gray-600 mb-3" style={style}>
 			<button className="flex items-center gap-2" id='aroma' onClick={handleClick}>
 			<div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-10 border-b-gray-500" />
 			<span>Aroma</span>
