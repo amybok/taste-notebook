@@ -7,7 +7,6 @@ const { data, error } = await supabase
 if (error) {
   // Logs the full error: message, code, details, and hint.
   console.error(error)
-  return
 } else {
   console.log(data)
 }
