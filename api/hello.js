@@ -21,8 +21,8 @@ async function test(){
   console.log(data)};
 }
 
-export function GET(request) {
-  test();
+export async function GET(request) {
+  await test();
   console.log("yes")
   return new Response('Hello from Vercel!');
 }
