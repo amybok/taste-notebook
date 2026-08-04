@@ -21,15 +21,16 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const { error } = await supabase
+  const { error, status, statusText } = await supabase
   .from('records')
   .insert({ beans_name: "Carambolo", brand: "Manta Ray", region: "South America", method: "filter", varietal: null, type: "blend" })
+  .select();
 
   if (error) {
-    console.log(error);
+    console.log(error, status, statusText);
   }
   else {
-    console.log("success");
+    console.log("success", status, statusText);
     return new Response('Hello from Vercel!');
   }
 }
