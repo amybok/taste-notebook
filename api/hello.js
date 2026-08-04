@@ -15,15 +15,23 @@ async function query(){
 async function submit(){}
 
 export async function GET(request) {
-  await query();
-  console.log("yes")
-  return new Response('Hello from Vercel!');
+  // await query();
+  // console.log("yes")
+  // return new Response('Hello from Vercel!');
 }
 
 export async function POST(request) {
-  // const { error } = await supabase
-  // .from('countries')
-  // .insert({ id: 1, name: 'Mordor' })
+  const { error } = await supabase
+  .from('records')
+  .insert({ beans_name: "Carambolo", brand: "Manta Ray", region: "South America", method: "filter", varietal: null, type: "blend" })
+
+  if (error) {
+    console.log(error);
+  }
+  else {
+    console.log("success");
+    return new Response('Hello from Vercel!');
+  }
 }
 
 export async function PATCH(request) {
